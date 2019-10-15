@@ -37,6 +37,7 @@ def consultaPorCodigo(codigo):
     while i<len(sheet.values):
         if str(sheet.values[i][0]) == str(codigo):
             result = sheet.values[i]
+            break
         i += 1
     return result
 
