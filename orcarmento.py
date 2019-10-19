@@ -3,8 +3,12 @@ from sinapiInsumosDesonerado import *
 import pandas as pd
 import os
 
-codigos = getAllCodigos()
-quantidades = getAllQuantidades()
+
+plan = Procura()
+rev = RevitData()
+
+codigos = rev.getAllCodigos()
+quantidades =  rev.getAllQuantidades()
 precosUnitarios = []
 precosTotais = []
 unidades = []
@@ -15,10 +19,10 @@ i = 0
 total = 0 
 
 while(i < len(codigos)):
-    precosUnitarios.append(precoUnitario(codigos[i]))
+    precosUnitarios.append(plan.precoUnitario(codigos[i]))
     precosTotais.append(float("{0:.2f}".format(precosUnitarios[i]*quantidades[i])))
-    unidades.append(unidadeMedida(codigos[i]))
-    descricoes.append(descricao(codigos[i]))
+    unidades.append(plan.consultaPorCodigo(codigos[i])[2])
+    descricoes.append(plan.consultaPorCodigo(codigos[i])[1])
     total += precosTotais[i]
     i += 1
 
