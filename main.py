@@ -75,7 +75,7 @@ da = q2.get()
 
 for d in da:
     if d[1] != '-':
-        d.append(ct[i]) 
+        d.append("{0:.2f}".format(ct[i])) 
         i+= 1
     else:
         if len(d) < 6:
