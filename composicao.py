@@ -28,9 +28,9 @@ class ComposicaoAnalitica:
     def descricao(self, codigo):
         desc = ""
         codigo = str(codigo)
-        for linha in self.sheet[1].values:
-            if codigo == linha[0]:
-                desc = linha[1]
+        for linha in self.sheet[0].values:
+            if codigo == linha[6]:
+                desc = linha[7]
                 break
         return desc
     
@@ -45,7 +45,7 @@ class ComposicaoAnalitica:
     
     def achaInsumosPorComposicao(self,codComposicao):
         codComposicao = str(codComposicao)
-        codInsumos = []
+        codInsumos = [codComposicao]
         for linha in self.sheet[0].values:
             if linha[6] == codComposicao:
                 if linha[11] == "COMPOSICAO":
@@ -53,8 +53,45 @@ class ComposicaoAnalitica:
                 if linha[11] == "INSUMO":
                     codInsumos.append(linha[12])
         return codInsumos
+    
+    def maoDeObraComposicao(self, codComposicao):
+        codComposicao = str(codComposicao)
+        rst = 0
+        for linha in self.sheet[0].values:
+            if linha[6] == codComposicao:
+                if linha[11] != 'COMPOSICAO' and linha[11] != 'INSUMO':
+                    rst = str(linha[19])
+                    aux = ''
+                    for n in rst:
+                        if n != ',' and n != '.':
+                            aux += n
+                        else:
+                            if n == ',':
+                                aux += '.'
+                    rst = float(aux) 
+        return rst
 
-        
-c = ComposicaoAnalitica('SINAPI_Custo_Ref_Composicoes_Analitico_MA_201908_Desonerado.xls')
-
-print(c.achaInsumosPorComposicao(97141))
+    def custoTotal(self,codComposicao, qntdade):
+        codComposicao = str(codComposicao)
+        rst = []
+        for linha in self.sheet[0].values:
+            if linha[6] == codComposicao:
+                if linha[11] == 'INSUMO':
+                    aux = ''
+                    for n in linha[18]:
+                        if n != '.' and n != ',':
+                            aux += n
+                        else:
+                            if n == ',':
+                                aux += '.'
+                    rst.append(float(aux) * qntdade)
+                if linha[11] == 'COMPOSICAO':
+                    aux = ''
+                    for n in linha[16]:
+                        if n != '.' and n != ',':
+                            aux += n
+                        else:
+                            if n == ',':
+                                aux += '.'
+                    rst += self.custoTotal(linha[12],float(aux))
+        return rst

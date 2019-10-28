@@ -1,7 +1,7 @@
 import pandas as pd
 import re
 
-class Procura():
+class Insumos:
     def openXls(self):
         xls = pd.ExcelFile("SINAPI_Preco_Ref_Insumos_MA_201908_Desonerado.xls")
         sheet = xls.parse(0)
