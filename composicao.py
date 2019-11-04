@@ -78,13 +78,20 @@ class ComposicaoAnalitica:
             if linha[6] == codComposicao:
                 if linha[11] == 'INSUMO':
                     aux = ''
+                    aux2 =''
                     for n in linha[18]:
                         if n != '.' and n != ',':
                             aux += n
                         else:
                             if n == ',':
                                 aux += '.'
-                    rst.append(float(aux) * qntdade)
+                    for n in linha[16]:
+                        if n != '.' and n != ',':
+                            aux2 += n
+                        else:
+                            if n == ',':
+                                aux2 += '.'
+                    rst.append([float(aux) * qntdade, float(aux2)*qntdade])
                 if linha[11] == 'COMPOSICAO':
                     aux = ''
                     for n in linha[16]:

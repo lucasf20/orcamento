@@ -3,7 +3,7 @@ import re
 
 class Insumos:
     def openXls(self):
-        xls = pd.ExcelFile("SINAPI_Preco_Ref_Insumos_MA_201908_Desonerado.xls")
+        xls = pd.ExcelFile(r"C:\Users\lucas\Desktop\dynamo_sinapi\orcamento-master\SINAPI_Preco_Ref_Insumos_MA_201908_Desonerado.xls")
         sheet = xls.parse(0)
         return sheet
 
